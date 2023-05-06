@@ -19,15 +19,41 @@ var server=http.createServer((req, res)=>{
         })
     }
     else if(req.url==='/create' && req.method=="POST"){
-        fs.appendFile("blogs.txt", "TEST", (err)=>{
-            if(err){
-                console.log(err);
-            }else{
-                res.statusCode=302;
-                res.setHeader('Location', '/');
-                res.end();
-            }
+        const data=[];
+        // req.on("data", (chunk)=>{
+        //     data.push(chunk)
+        // });
+
+        req.on('data', (chunk)=>{
+            data.push(chunk);
+            console.log(data);
         })
+
+        // req.on('end', ()=>{
+        //     const result=Buffer.concat(data).toString();
+        //     const parsedData=result.split("=")[1];
+        //     console.log(parsedData);
+
+            
+        // })
+        req.on('end', ()=>{
+            const result=Buffer.concat(data).toString();
+            const parsedData=result.split("=")[1];
+            console.log(result);
+            
+            fs.appendFile('blogs.txt', parsedData, (err)=>{
+                if(err){
+                    console.log(err);
+                }else{
+                    res.statusCode=302;
+                    res.setHeader('Location', '/');
+                    res.end()
+                }
+            })
+        })
+        
+        
+
     }
     else if(req.url==='/create'){
         fs.readFile('create.html', (err, html)=>{
