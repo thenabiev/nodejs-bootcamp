@@ -1,8 +1,7 @@
 const express=require('express');
+const path=require('path')
 
 const app=express();
-
-let num;
 
 
 app.use('/about',(req, res)=>{
@@ -10,16 +9,19 @@ app.use('/about',(req, res)=>{
 });
 
 app.use(`/blogs/:blogId`, (req, res)=>{
-    let blogId=req.params.blogId
-    res.send(`Blog ${blogId} details`)
+
+    res.sendFile(path.join(__dirname, 'views/users', 'blog-details.html'))
+
+    // let blogId=req.params.blogId
+    // res.send(`Blog ${blogId} details`)
 })
 
 app.use('/blogs', (req, res)=>{
-    res.send('Blogs page')
+    res.sendFile(path.join(__dirname, 'views/users', 'blogs.html'))
 })
 
 app.use('/',(req, res)=>{
-    res.send('Home page')
+    res.sendFile(path.join(__dirname, 'views/users', 'index.html'))
 });
 app.listen(3003, ()=>{ 
 
