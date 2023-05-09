@@ -9,8 +9,9 @@ app.use('/about',(req, res)=>{
     res.send('About page');
 });
 
-app.use(`/blogs/${num}`, (req, res)=>{
-    res.send(`Blog ${num} details`)
+app.use(`/blogs/:blogId`, (req, res)=>{
+    let blogId=req.params.blogId
+    res.send(`Blog ${blogId} details`)
 })
 
 app.use('/blogs', (req, res)=>{
