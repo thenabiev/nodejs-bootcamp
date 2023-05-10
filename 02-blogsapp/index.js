@@ -3,6 +3,16 @@ const path=require('path')
 
 const app=express();
 
+// Static files middleware
+// #######################
+app.use('/libs', express.static(
+    path.join(__dirname ,'node_modules')
+))
+app.use('/static', express.static(
+    path.join(__dirname,'public')
+))
+// #######################
+
 
 app.use('/about',(req, res)=>{
     res.send('About page');
